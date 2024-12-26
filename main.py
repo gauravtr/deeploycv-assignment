@@ -1,60 +1,67 @@
-import os
+import numpy as np
+from sklearn.linear_model import Ridge
 
-from PIL import Image, ImageDraw
 
-import torch
+def get_matrix_input(rows, cols, prompt):
+    print(prompt)
+    matrix = []
+    for i in range(rows):
+        while True:
+            try:
+                row = list(map(float, input(f"Row {i + 1}: ").split()))
+                if len(row) != cols:
+                    raise ValueError(f"Expected {cols} values, got {len(row)}")
+                matrix.append(row)
+                break
+            except ValueError as e:
+                print(f"Invalid input: {e}")
+    return np.array(matrix)
 
-from torchvision import models, transforms
-import torch.nn as nn
 
-from annoy import AnnoyIndex
+def main():
+    # Collecting user inputs
+    try:
+        num_features = int(input("Number of features: "))
+        num_samples = int(input("Number of data points: "))
+        if num_features <= 0 or num_samples <= 0:
+            raise ValueError("Number of features and samples must be positive integers.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+        return
 
-images_folder = r"C:\Users\gaura\Downloads\archive.zip"
+    # Collect feature data
+    data = get_matrix_input(num_samples, num_features,
+                            f"Enter feature values (rows: {num_samples}, columns: {num_features}):")
 
-images = os.listdir(images_folder)
+    # Collect target data
+    while True:
+        try:
+            target = list(map(float, input("Enter target values: ").split()))
+            if len(target) != num_samples:
+                raise ValueError(f"Expected {num_samples} target values, got {len(target)}")
+            target = np.array(target)
+            break
+        except ValueError as e:
+            print(f"Invalid input: {e}")
 
-weights = models.ResNet18_Weights.IMAGENET1K_V1
-model = models.resnet18(weights=weights)
-model.fc = nn.Identity()
+    # Ridge regression model
+    try:
+        alpha = float(input("Regularization strength (alpha): "))
+        if alpha < 0:
+            raise ValueError("Alpha must be a non-negative value.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+        return
 
-model.eval()
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor()
-])
+    # Fit the model
+    model = Ridge(alpha=alpha)
+    model.fit(data, target)
 
-annoy_index = AnnoyIndex(512, 'angular')
+    # Output results
+    print("\nRidge Regression Results:")
+    print("Coefficients:", model.coef_)
+    print("Intercept:", model.intercept_)
 
-for i in range(len(images)):
-    image = Image.open(os.path.join(images_folder, images[i]))
-    input_tensor = transform(image).unsqueeze(0)
 
-    if input_tensor.size()[1] == 3:
-        output_tensor = model(input_tensor)
-        annoy_index.add_item(i, output_tensor[0])
-
-    if i % 100 == 0:
-        print(f'Processed {i} images.')
-annoy_index = AnnoyIndex(512, 'angular')
-annoy_index.load('dog_index.ann')
-
-image_grid = Image.new('RGB', (1000, 1000))
-
-for i in range(len(images)):
-    image = Image.open(os.path.join(images_folder, images[i]))
-    input_tensor = transform(image).unsqueeze(0)
-
-    if input_tensor.size()[1] == 3:
-        output_tensor = model(input_tensor)
-        nns = annoy_index.get_nns_by_vector(output_tensor[0], 24)
-
-        image = image.resize((200, 200))
-        image_draw = ImageDraw.Draw(image)
-        image_draw.rectangle([(0, 0), (199, 199)], outline='red', width=8)
-        image_grid.paste(image, ((0, 0)))
-for j in range(24):
-    search_image = Image.open(os.path.join(images_folder, images[nns[j]]))
-    search_image = search_image.resize((200, 200))
-    image_grid.paste(search_image, (200 * ((j+1) % 5), 200 * ((j+1) // 5)))
-image_grid.save(f'ImageDump/image_{i}.png')
-
+if __name__ == "__main__":
+    main()
