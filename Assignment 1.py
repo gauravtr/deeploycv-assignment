@@ -4,7 +4,7 @@ import numpy as np
 
 def determine_flag(image_path):
     image = Image.open(image_path).convert("RGB")
-    image = image.resize((300, 200))  # Resize to a standard 3:2 aspect ratio
+    image = image.resize((300, 200))  
     data = np.array(image)
 
     height = data.shape[0]
@@ -13,8 +13,8 @@ def determine_flag(image_path):
 
     # Calculate average color
     def dominant_color(region):
-        pixels = region.reshape(-1, 3)  # Flatten to list of RGB values
-        mean_color = np.mean(pixels, axis=0)  # Mean color
+        pixels = region.reshape(-1, 3)
+        mean_color = np.mean(pixels, axis=0) 
         return mean_color
 
     top_color = dominant_color(top_half)
@@ -40,3 +40,4 @@ def determine_flag(image_path):
 image_path = r"C:\Users\gaura\Downloads\poland.png"  # Update this to your image path
 result = determine_flag(image_path)
 print(result)
+
