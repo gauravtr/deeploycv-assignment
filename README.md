@@ -12,22 +12,8 @@
   <img src="https://img.shields.io/badge/Dataset-10K+_Images-orange?style=for-the-badge"/>
 </p>
 
----
 
-## 🖼️ Generated Samples
-
-<!-- Replace with your actual generated image grid after training -->
-<!-- Tip: use matplotlib to save a grid of 16 generated images as samples.png -->
-
-| Early Training (Epoch 5) | Mid Training (Epoch 50) | Final Output (Epoch 100+) |
-|:---:|:---:|:---:|
-| ![epoch5](assets/epoch_005.png) | ![epoch50](assets/epoch_050.png) | ![final](assets/final_samples.png) |
-
-> *Watch the generator learn — random noise progressively becomes photorealistic imagery.*
-
----
-
-## 📌 Project Overview
+##  Project Overview
 
 This project was completed as part of **Deeploy CV**, a structured deep learning program run by
 the **Google Developer Group at IIT Kanpur** (Dec 2024 – Feb 2025).
@@ -46,7 +32,7 @@ models from scratch rather than using pre-trained weights.
 
 ---
 
-## 🧠 What is a GAN?
+##  What is a GAN?
 
 A **Generative Adversarial Network** consists of two neural networks locked in competition:
 
@@ -70,7 +56,7 @@ discriminator. This adversarial dynamic forces the generator to produce increasi
 
 ---
 
-## 🏗️ Architecture — DCGAN
+##  Architecture — DCGAN
 
 **DCGAN (Deep Convolutional GAN)** replaces the fully-connected layers of the original GAN
 with convolutional layers, making it far more stable to train and more effective at capturing
@@ -124,7 +110,7 @@ Real / Fake Image (64×64×3)
 
 ---
 
-## 📁 Dataset
+##  Dataset
 
 - **Size:** 10,000+ images curated and preprocessed from scratch
 - **Preprocessing pipeline:**
@@ -148,7 +134,7 @@ dataset/
 
 ---
 
-## 📊 Training Details
+##  Training Details
 
 | Hyperparameter | Value |
 |---|---|
@@ -172,7 +158,7 @@ dataset/
 
 ---
 
-## 🚀 Setup & Training
+##  Setup & Training
 
 ### 1. Clone the repository
 ```bash
@@ -211,7 +197,7 @@ python generate.py --checkpoint outputs/checkpoints/checkpoint_epoch_100.pt --n 
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 deeploy-cv/
@@ -238,7 +224,7 @@ deeploy-cv/
 
 ---
 
-## 📈 Results
+##  Results
 
 ### What was achieved
 - Visually convincing synthetic image generation across multiple dataset domains
@@ -269,7 +255,7 @@ Beyond the baseline DCGAN, the following variants were explored:
 
 ---
 
-## 📚 References
+##  References
 
 - [Original GAN paper — Goodfellow et al., 2014](https://arxiv.org/abs/1406.2661)
 - [DCGAN paper — Radford et al., 2015](https://arxiv.org/abs/1511.06434)
@@ -278,7 +264,7 @@ Beyond the baseline DCGAN, the following variants were explored:
 
 ---
 
-## 🏅 Acknowledgements
+##  Acknowledgements
 
 This project was completed as part of **Deeploy CV**, a computer vision deep learning program
 organised by the **Google Developer Group at IIT Kanpur**.
@@ -288,9 +274,9 @@ from scratch over using pre-built pipelines — the hard way turned out to be th
 
 ---
 
-## 👤 Author
+##  Author
 
-**Sanjay**
+**Gaurav Tripathi**
 - GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
 - LinkedIn: [linkedin.com/in/YOUR_PROFILE](https://linkedin.com/in/YOUR_PROFILE)
 
